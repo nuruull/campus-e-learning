@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\API\MaterialController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CourseController;
+use App\Http\Controllers\API\MaterialController;
+use App\Http\Controllers\API\AssignmentController;
+use App\Http\Controllers\API\SubmissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +22,14 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::prefix('courses')->middleware(['role:dosen'])->group(function () {
     Route::get('/', [CourseController::class, 'index']);
     Route::post('/', [CourseController::class, 'store']);
+    Route::get('/{course}', [CourseController::class, 'show']);
     Route::put('/{course}', [CourseController::class, 'update']);
     Route::delete('/{course}', [CourseController::class, 'destroy']);
 
     Route::post('/{course}/materials', [MaterialController::class, 'store']);
+
+    Route::get('/{course}/assignments', [AssignmentController::class, 'index']);
+    Route::post('/{course}/assignments', [AssignmentController::class, 'store']);
   });
 
   Route::prefix('courses')->middleware(['role:mahasiswa'])->group(function () {
@@ -33,4 +39,11 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::prefix('materials')->middleware(['role:mahasiswa'])->group(function () {
     Route::post('/{material}/materials', [MaterialController::class, 'download']);
   });
+
+  Route::get('/assignments/{assignment}', [AssignmentController::class, 'show'])->middleware('role:dosen');
+  Route::put('/assignments/{assignment}', [AssignmentController::class, 'update'])->middleware('role:dosen');
+  Route::delete('/assignments/{assignment}', [AssignmentController::class, 'destroy'])->middleware('role:dosen');
+
+  Route::post('/assignments/{assignment}/submissions', [SubmissionController::class, 'store'])->middleware('role:mahasiswa');
+  Route::post('/submissions/{submission}/grade', [SubmissionController::class, 'grade'])->middleware('role:dosen');
 });
