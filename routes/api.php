@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\CourseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function () {
+  Route::prefix('courses')->middleware(['role:dosen'])->group(function () {
+    Route::get('/', [CourseController::class, 'index']);
+    Route::post('/', [CourseController::class, 'store']);
+    Route::put('/{course}', [CourseController::class, 'update']);
+    Route::delete('/{course}', [CourseController::class, 'destroy']);
+  });
+
+  Route::middleware(['role:mahasiswa'])->group(function () {
+    Route::post('/course/{course}/enroll', [CourseController::class, 'enroll']);
+  });
 });
