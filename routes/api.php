@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\MaterialController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CourseController;
@@ -21,9 +22,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/', [CourseController::class, 'store']);
     Route::put('/{course}', [CourseController::class, 'update']);
     Route::delete('/{course}', [CourseController::class, 'destroy']);
+
+    Route::post('/{course}/materials', [MaterialController::class, 'store']);
   });
 
-  Route::middleware(['role:mahasiswa'])->group(function () {
-    Route::post('/course/{course}/enroll', [CourseController::class, 'enroll']);
+  Route::prefix('courses')->middleware(['role:mahasiswa'])->group(function () {
+    Route::post('/{course}/enroll', [CourseController::class, 'enroll']);
+  });
+
+  Route::prefix('materials')->middleware(['role:mahasiswa'])->group(function () {
+    Route::post('/{material}/materials', [MaterialController::class, 'download']);
   });
 });
