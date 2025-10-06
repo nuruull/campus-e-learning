@@ -52,4 +52,19 @@ class User extends Authenticatable
   {
     return $this->belongsToMany(Course::class, 'course_user', 'user_id', 'course_id');
   }
+
+  public function submissions()
+  {
+    return $this->hasMany(Submission::class, 'student_id');
+  }
+
+  public function discussions()
+  {
+    return $this->hasMany(Discussion::class, 'user_id');
+  }
+
+  public function replies()
+  {
+    return $this->hasMany(Reply::class, 'user_id');
+  }
 }

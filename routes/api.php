@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CourseController;
 use App\Http\Controllers\API\MaterialController;
 use App\Http\Controllers\API\AssignmentController;
+use App\Http\Controllers\API\DiscussionController;
 use App\Http\Controllers\API\SubmissionController;
 
 /*
@@ -46,4 +47,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
   Route::post('/assignments/{assignment}/submissions', [SubmissionController::class, 'store'])->middleware('role:mahasiswa');
   Route::post('/submissions/{submission}/grade', [SubmissionController::class, 'grade'])->middleware('role:dosen');
+
+  Route::get('/courses/{course}/discussions', [DiscussionController::class, 'index']);
+  Route::post('/courses/{course}/discussions', [DiscussionController::class, 'store']);
+  Route::post('/discussions/{discussion}/replies', [DiscussionController::class, 'storeReply']);
+
 });
