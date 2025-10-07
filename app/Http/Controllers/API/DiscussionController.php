@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\Course;
 use App\Models\Discussion;
 use Illuminate\Http\Request;
+use App\Events\NewReplyPosted;
 use App\Http\Controllers\Controller;
 
 class DiscussionController extends Controller
@@ -44,6 +45,8 @@ class DiscussionController extends Controller
         ]);
 
         $reply->load('user');
+
+        broadcast(new NewReplyPosted($reply->fresh()))->toOthers();
 
         return response()->json($reply, 201);
     }

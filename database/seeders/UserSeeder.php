@@ -19,11 +19,18 @@ class UserSeeder extends Seeder
         ]);
         $dosen->assignRole('dosen');
 
-        $mahasiswa = User::create([
+        $mahasiswa1 = User::create([
           'name' => 'Mahasiswa nurul',
           'email' => 'nurulmahasiswa@elearning.com',
           'password' => bcrypt('password123'),
         ]);
-        $mahasiswa->assignRole('mahasiswa');
+        $mahasiswa1->assignRole('mahasiswa');
+
+        $mahasiswa2 = User::create([
+          'name' => 'Mahasiswa gesang',
+          'email' => 'gesangmahasiswa@elearning.com',
+          'password' => bcrypt('password123'),
+        ]);
+        $mahasiswa2->assignRole('mahasiswa');
     }
 }

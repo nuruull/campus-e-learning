@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Assignment;
 use App\Models\Course;
+use App\Models\Assignment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewAssignmentNotification;
 
 class AssignmentController extends Controller
 {
@@ -33,6 +35,12 @@ class AssignmentController extends Controller
     ]);
 
     $assignment = $course->assignments()->create($validatedData);
+
+    $students = $course->students;
+
+    foreach ($students as $student) {
+      Mail::to($student->email)->queue(new NewAssignmentNotification($assignment));
+    }
 
     return response()->json($assignment, 201);
   }
