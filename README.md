@@ -1,66 +1,173 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Aplikasi E-Learning Kampus (API)
+Ini adalah backend API untuk aplikasi E-Learning Kampus yang dibangun menggunakan Laravel. Aplikasi ini menyediakan fungsionalitas lengkap mulai dari autentikasi, manajemen mata kuliah, tugas, forum diskusi, hingga laporan statistik, sesuai dengan soal tes yang diberikan.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Fitur Utama
+Autentikasi Berbasis Token: Menggunakan Laravel Sanctum untuk autentikasi yang aman.
 
-## About Laravel
+Manajemen Role: Membedakan hak akses antara Dosen dan Mahasiswa menggunakan spatie/laravel-permission.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Manajemen Mata Kuliah: CRUD penuh untuk mata kuliah dan sistem pendaftaran (enroll) untuk mahasiswa.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Manajemen Materi: Dosen dapat mengunggah materi dan mahasiswa dapat mengunduhnya.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Sistem Tugas & Penilaian: Dosen dapat membuat tugas, mahasiswa mengumpulkan jawaban, dan dosen dapat memberi nilai.
 
-## Learning Laravel
+Forum Diskusi: Sarana interaksi antara dosen dan mahasiswa di setiap mata kuliah.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Laporan & Statistik: Endpoint untuk melihat statistik jumlah mahasiswa, status penilaian tugas, dan laporan detail per mahasiswa.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Fitur Tambahan yang Diimplementasikan
+✅ Soft Deletes: Data penting seperti mata kuliah dan tugas tidak akan terhapus permanen.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+✅ Notifikasi Email: Mahasiswa menerima notifikasi email saat ada tugas baru, diproses melalui sistem antrean (Queue) untuk performa optimal.
 
-## Laravel Sponsors
+✅ Forum Real-Time: Diskusi diperbarui secara real-time tanpa perlu refresh halaman, dibangun menggunakan Laravel Reverb.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Teknologi yang Digunakan
+Laravel 12
 
-### Premium Partners
+PHP 8.2
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Laravel Sanctum (untuk autentikasi API)
 
-## Contributing
+Spatie Laravel Permission (untuk manajemen role)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Laravel Reverb (untuk fungsionalitas WebSocket real-time)
 
-## Code of Conduct
+Laravel Queue (untuk memproses pengiriman email di latar belakang)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+MySQL / PostgreSQL
 
-## Security Vulnerabilities
+Panduan Instalasi & Setup Lokal
+Clone Repositori
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+git clone [https://github.com/nama-anda/e-learning-kampus.git](https://github.com/nama-anda/e-learning-kampus.git)
+cd e-learning-kampus
 
-## License
+Install Dependensi
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+composer install
+npm install
+
+Konfigurasi Environment
+Salin file .env.example dan sesuaikan konfigurasinya.
+
+cp .env.example .env
+
+Buka file .env dan atur koneksi database (DB*\*), kredensial Mailtrap (MAIL*\*), dan biarkan konfigurasi Reverb & Pusher apa adanya untuk lokal.
+
+Generate Key & Migrasi Database
+
+php artisan key:generate
+php artisan migrate --seed
+
+(Pastikan Anda sudah membuat database kosong sesuai konfigurasi di .env)
+
+Jalankan Server-Server yang Dibutuhkan
+Buka 3 terminal terpisah dan jalankan perintah berikut di masing-masing terminal:
+
+Terminal 1: Web Server (jika tidak pakai Laragon/Valet)
+
+php artisan serve
+
+Terminal 2: WebSocket Server (Reverb)
+
+php artisan reverb:start
+
+Terminal 3: Queue Worker
+
+php artisan queue:work
+
+Aplikasi API sekarang siap diakses di http://localhost:8000 atau URL lokal Anda.
+
+Dokumentasi Endpoint API
+Semua endpoint di bawah ini memerlukan header Accept: application/json.
+
+1. Autentikasi
+   Registrasi User
+   Endpoint: POST /register
+
+Deskripsi: Mendaftarkan user baru sebagai Dosen atau Mahasiswa.
+
+Body:
+
+{
+"name": "Nama User",
+"email": "user@example.com",
+"password": "password",
+"password_confirmation": "password",
+"role": "mahasiswa" // atau "dosen"
+}
+
+Login User
+Endpoint: POST /login
+
+Deskripsi: Login untuk mendapatkan token API.
+
+Body:
+
+{
+"email": "user@example.com",
+"password": "password"
+}
+
+Respons Sukses:
+
+{
+"access_token": "1|token_anda...",
+"token_type": "Bearer"
+}
+
+Logout User
+Endpoint: POST /logout
+
+Authorization: Bearer Token diperlukan.
+
+2. Manajemen Mata Kuliah
+   Semua endpoint di bawah ini memerlukan Bearer Token.
+
+GET /api/courses: Menampilkan semua mata kuliah.
+
+GET /api/courses/{course:slug}: Menampilkan detail satu mata kuliah.
+
+POST /api/courses: Membuat mata kuliah baru (hanya Dosen).
+
+PUT /api/courses/{course:slug}: Mengupdate mata kuliah (hanya Dosen pemilik).
+
+DELETE /api/courses/{course:slug}: Mengarsipkan mata kuliah (hanya Dosen pemilik).
+
+POST /api/courses/{course:slug}/enroll: Mendaftarkan mahasiswa ke mata kuliah (hanya Mahasiswa).
+
+3. Materi Perkuliahan
+   Memerlukan Bearer Token.
+
+POST /api/courses/{course:slug}/materials: Upload materi baru (hanya Dosen pemilik).
+
+GET /api/materials/{material}/download: Download file materi.
+
+4. Tugas & Penilaian
+   Memerlukan Bearer Token.
+
+POST /api/courses/{course:slug}/assignments: Membuat tugas baru (hanya Dosen pemilik).
+
+POST /api/assignments/{assignment}/submissions: Mengumpulkan jawaban (hanya Mahasiswa).
+
+POST /api/submissions/{submission}/grade: Memberi nilai (hanya Dosen).
+
+5. Forum Diskusi
+   Memerlukan Bearer Token.
+
+GET /api/courses/{course:slug}/discussions: Menampilkan semua diskusi di mata kuliah.
+
+POST /api/courses/{course:slug}/discussions: Membuat diskusi baru.
+
+POST /api/discussions/{discussion}/replies: Membalas sebuah diskusi.
+
+6. Laporan & Statistik
+   Memerlukan Bearer Token.
+
+GET /api/reports/courses: Statistik jumlah mahasiswa per mata kuliah.
+
+GET /api/reports/assignments: Statistik submission yang sudah/belum dinilai (berdasarkan role).
+
+GET /api/reports/students/{user}: Laporan detail tugas dan nilai seorang mahasiswa (akses dibatasi).
