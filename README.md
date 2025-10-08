@@ -1,338 +1,190 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📚 E-LEARNING CAMPUS (API)
 
-<p align="center">
-<img src="https://img.shields.io/badge/Laravel-v12.x-FF2D20?style=for-the-badge&logo=laravel" alt="Laravel Version">
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/PHP-8.2-777BB4%3Fstyle%3Dfor-the-badge%26logo%3Dphp" alt="PHP Version">
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/License-MIT-green.svg%3Fstyle%3Dfor-the-badge" alt="License">
-</p>
+Backend API untuk aplikasi **E-Learning Kampus** yang dibangun menggunakan **Laravel**.
+Menyediakan fitur lengkap seperti autentikasi, manajemen mata kuliah, tugas, forum diskusi, dan laporan aktivitas mahasiswa, sesuai dengan soal tes yang diberikan.
 
-Aplikasi E-Learning Kampus (API)
-Ini adalah backend API untuk aplikasi E-Learning Kampus yang dibangun menggunakan Laravel. Aplikasi ini menyediakan fungsionalitas lengkap mulai dari autentikasi, manajemen mata kuliah, tugas, forum diskusi, hingga laporan statistik, sesuai dengan soal tes yang diberikan.
+---
 
-✨ Fitur Utama
-Autentikasi Berbasis Token: Menggunakan Laravel Sanctum untuk autentikasi yang aman.
+## 🚀 Features
 
-Manajemen Role: Membedakan hak akses antara Dosen dan Mahasiswa menggunakan spatie/laravel-permission.
+- 🔐 **Autentikasi Token (Sanctum)** dengan manajemen Role Dosen & Mahasiswa (Spatie).
+- 📘 **CRUD penuh** untuk manajemen mata kuliah, materi, tugas, dan sistem penilaian.
+- 💬 **Forum Diskusi interaktif** antar pengguna.
+- 📊 **Laporan & Statistik** aktivitas mahasiswa dan tugas.
+- ⚙️ **Fitur tambahan**: Soft Deletes, Notifikasi Email via Queue, Forum Real-Time dengan Laravel Reverb.
 
-Manajemen Mata Kuliah: CRUD penuh untuk mata kuliah dan sistem pendaftaran (enroll) untuk mahasiswa.
+---
 
-Manajemen Materi: Dosen dapat mengunggah materi dan mahasiswa dapat mengunduhnya.
+## 🧩 Technologies
 
-Sistem Tugas & Penilaian: Dosen dapat membuat tugas, mahasiswa mengumpulkan jawaban, dan dosen dapat memberi nilai.
+- Laravel 12 / PHP 8.2
+- Laravel Sanctum
+- Spatie Laravel Permission
+- Laravel Reverb & Queue
+- MySQL / PostgreSQL
 
-Forum Diskusi: Sarana interaksi antara dosen dan mahasiswa di setiap mata kuliah.
+---
 
-Laporan & Statistik: Endpoint untuk melihat statistik jumlah mahasiswa, status penilaian tugas, dan laporan detail per mahasiswa.
+## 🛠️ Installation
 
-🚀 Fitur Tambahan yang Diimplementasikan
-✅ Soft Deletes: Data penting seperti mata kuliah dan tugas tidak akan terhapus permanen.
+### 1. Clone Repository
 
-✅ Notifikasi Email: Mahasiswa menerima notifikasi email saat ada tugas baru, diproses melalui sistem antrean (Queue) untuk performa optimal.
+```bash
+git clone https://github.com/nuruull/campus-e-learning.git
+cd campus-e-learning
+```
 
-✅ Forum Real-Time: Diskusi diperbarui secara real-time tanpa perlu refresh halaman, dibangun menggunakan Laravel Reverb.
+### 2. Install Dependencies
 
-🛠️ Teknologi yang Digunakan
-Laravel 12
-
-PHP 8.2
-
-Laravel Sanctum (untuk autentikasi API)
-
-Spatie Laravel Permission (untuk manajemen role)
-
-Laravel Reverb (untuk fungsionalitas WebSocket real-time)
-
-Laravel Queue (untuk memproses pengiriman email di latar belakang)
-
-MySQL / PostgreSQL
-
-⚙️ Panduan Instalasi & Setup Lokal
-Clone Repositori
-
-git clone [https://github.com/NAMA_ANDA/NAMA_REPO.git](https://github.com/NAMA_ANDA/NAMA_REPO.git)
-cd NAMA_REPO
-
-Install Dependensi
-
+```bash
 composer install
 npm install
+```
 
-Konfigurasi Environment
-Salin file .env.example dan sesuaikan konfigurasinya.
+### 3. Configure Environment
 
+```bash
 cp .env.example .env
-
-Buka file .env dan atur koneksi database (DB_*), kredensial Mailtrap (MAIL_*), dan biarkan konfigurasi Reverb & Pusher apa adanya untuk lokal.
-
-Generate Key & Migrasi Database
-
 php artisan key:generate
+```
+
+> Pastikan untuk mengatur koneksi database (`DB_*`) dan kredensial Mailtrap (`MAIL_*`) di file `.env`.
+
+### 4. Run Migrations
+
+```bash
 php artisan migrate --seed
+```
 
-(Pastikan Anda sudah membuat database kosong sesuai konfigurasi di .env)
+---
 
-Jalankan Server-Server yang Dibutuhkan
-Buka 3 terminal terpisah dan jalankan perintah berikut di masing-masing terminal:
+## ▶️ Usage
 
-Terminal 1: Web Server (jika tidak pakai Laragon/Valet)
+Jalankan tiga server berikut di terminal terpisah untuk fungsionalitas penuh.
 
+**Terminal 1 – Web Server**
+
+```bash
 php artisan serve
+```
 
-Terminal 2: WebSocket Server (Reverb)
+**Terminal 2 – WebSocket Server (Reverb)**
 
+```bash
 php artisan reverb:start
+```
 
-Terminal 3: Queue Worker
+**Terminal 3 – Queue Worker**
 
+```bash
 php artisan queue:work
+```
 
-Aplikasi API sekarang siap diakses di http://localhost:8000 atau URL lokal Anda.
+---
 
-📖 Dokumentasi Endpoint API
-Semua endpoint di bawah ini memerlukan header Accept: application/json. Endpoint yang terproteksi memerlukan Authorization: Bearer <TOKEN>.
+## 📡 API Documentation
 
-1. Autentikasi
-Method
+> Semua endpoint memerlukan header:
+>
+> ```
+> Accept: application/json
+> ```
+>
+> Endpoint yang terproteksi memerlukan:
+>
+> ```
+> Authorization: Bearer {token}
+> ```
 
-Endpoint
+---
 
-Deskripsi
+### 1. 🔑 Authentication
 
-Akses
+**Register User**
 
-POST
-
-/register
-
-Mendaftarkan user baru.
-
-Publik
-
-POST
-
-/login
-
-Login untuk mendapatkan token API.
-
-Publik
-
-POST
-
-/logout
-
-Logout dan mencabut token API.
-
-Login
-
-<details>
-<summary>Lihat Detail Request & Response</summary>
-
+```http
 POST /register
+```
 
+**Body**
+
+```json
 {
-    "name": "Nama User",
-    "email": "user@example.com",
-    "password": "password",
-    "password_confirmation": "password",
-    "role": "mahasiswa" // atau "dosen"
+  "name": "Nama User",
+  "email": "user@example.com",
+  "password": "password",
+  "password_confirmation": "password",
+  "role": "mahasiswa"
 }
+```
 
+**Login**
+
+```http
 POST /login
+```
 
+**Body**
+
+```json
 {
-    "email": "user@example.com",
-    "password": "password"
+  "email": "user@example.com",
+  "password": "password"
 }
+```
 
-Respons Sukses /login
+**Logout**
 
-{
-    "access_token": "1|token_anda...",
-    "token_type": "Bearer"
-}
+```http
+POST /logout
+```
 
-</details>
+---
 
-2. Manajemen Mata Kuliah
-Method
+### 2. 📘 Course Management
 
-Endpoint
+```http
+GET /api/courses
+POST /api/courses
+PUT /api/courses/{course:slug}
+DELETE /api/courses/{course:slug}
+POST /api/courses/{course:slug}/enroll
+```
 
-Deskripsi
+---
 
-Akses
+### 3. 📂 Materials, Assignments & Grading
 
-GET
+```http
+POST /api/courses/{course:slug}/materials
+GET /api/materials/{material}/download
+POST /api/courses/{course:slug}/assignments
+POST /api/assignments/{assignment}/submissions
+POST /api/submissions/{submission}/grade
+```
 
-/api/courses
+---
 
-Menampilkan semua mata kuliah.
+### 4. 💬 Forum & Reports
 
-Login
+```http
+GET /api/courses/{course:slug}/discussions
+POST /api/courses/{course:slug}/discussions
+POST /api/discussions/{discussion}/replies
+GET /api/reports/courses
+GET /api/reports/assignments
+GET /api/reports/students/{user}
+```
 
-GET
+---
 
-/api/courses/{course:slug}
+## 🤝 Contributing
 
-Menampilkan detail satu mata kuliah.
+Pull requests are welcome!
+Untuk perubahan besar, silakan buka issue terlebih dahulu untuk mendiskusikan apa yang ingin Anda ubah.
 
-Login
+---
 
-POST
+## 🧾 License
 
-/api/courses
-
-Membuat mata kuliah baru.
-
-Dosen
-
-PUT
-
-/api/courses/{course:slug}
-
-Mengupdate mata kuliah.
-
-Dosen (Pemilik)
-
-DELETE
-
-/api/courses/{course:slug}
-
-Mengarsipkan mata kuliah.
-
-Dosen (Pemilik)
-
-POST
-
-/api/courses/{course:slug}/enroll
-
-Mendaftar ke mata kuliah.
-
-Mahasiswa
-
-3. Materi Perkuliahan
-Method
-
-Endpoint
-
-Deskripsi
-
-Akses
-
-POST
-
-/api/courses/{course:slug}/materials
-
-Upload materi baru.
-
-Dosen (Pemilik)
-
-GET
-
-/api/materials/{material}/download
-
-Download file materi.
-
-Login
-
-4. Tugas & Penilaian
-Method
-
-Endpoint
-
-Deskripsi
-
-Akses
-
-POST
-
-/api/courses/{course:slug}/assignments
-
-Membuat tugas baru.
-
-Dosen (Pemilik)
-
-POST
-
-/api/assignments/{assignment}/submissions
-
-Mengumpulkan jawaban.
-
-Mahasiswa
-
-POST
-
-/api/submissions/{submission}/grade
-
-Memberi nilai.
-
-Dosen
-
-5. Forum Diskusi
-Method
-
-Endpoint
-
-Deskripsi
-
-Akses
-
-GET
-
-/api/courses/{course:slug}/discussions
-
-Menampilkan semua diskusi.
-
-Login
-
-POST
-
-/api/courses/{course:slug}/discussions
-
-Membuat diskusi baru.
-
-Login
-
-POST
-
-/api/discussions/{discussion}/replies
-
-Membalas sebuah diskusi.
-
-Login
-
-6. Laporan & Statistik
-Method
-
-Endpoint
-
-Deskripsi
-
-Akses
-
-GET
-
-/api/reports/courses
-
-Statistik jumlah mahasiswa per mata kuliah.
-
-Login
-
-GET
-
-/api/reports/assignments
-
-Statistik submission (berdasarkan role).
-
-Login
-
-GET
-
-/api/reports/students/{user}
-
-Laporan detail seorang mahasiswa.
-
-Terbatas
-
-License
-Proyek ini adalah perangkat lunak sumber terbuka yang dilisensikan di bawah Lisensi MIT.
+This project is licensed under the [MIT License](LICENSE).
