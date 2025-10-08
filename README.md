@@ -177,14 +177,3 @@ GET /api/reports/students/{user}
 ```
 
 ---
-
-## 🤝 Contributing
-
-Pull requests are welcome!
-Untuk perubahan besar, silakan buka issue terlebih dahulu untuk mendiskusikan apa yang ingin Anda ubah.
-
----
-
-## 🧾 License
-
-This project is licensed under the [MIT License](LICENSE).
